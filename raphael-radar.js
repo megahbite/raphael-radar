@@ -113,7 +113,7 @@
     var self = this;
 
     var points = self.points;
-    var measures = [], rulers = [], ruler_text= [];
+    var measures = [], rulers = [], ruler_text = [];
     var i, j, length = points.length, x, y, x1, x2, y1, y2, cl, text;
     var scale = (self.max_score - self.min_score) / 5;
     var r_len = 0.025;
@@ -158,9 +158,9 @@
     var i, j, x, y, x1, x2, y1, y2, title, line, point, text, value;
     var draw_options;
     var default_draw_options = {
-      points: {"fill":"#333", "stroke-width":"0", "size":4.5},
-      text: {"fill":"#222", "text-anchor":"start"},
-      lines: {"stroke-width":"1" }
+      points: {"fill": "#333", "stroke-width": "0", "size": 4.5},
+      text: {"fill": "#222", "text-anchor": "start"},
+      lines: {"stroke-width": "1" }
     };
     var length = self.score_groups.length;
     var points = self.points;
@@ -212,7 +212,7 @@
         y2 = y1;
         line = self.raphael.path("M " + x1 + " " + y1 + " L " + x2 + " " + y2).attr(draw_options["lines"]);
         point = self.raphael.circle(x1, y1, draw_options["points"]["size"]).attr(draw_options["points"]);
-        text = self.raphael.text(x2 + 10, y2, title).attr(draw_options["text"])
+        text = self.raphael.text(x2 + 10, y2, title).attr(draw_options["text"]);
         vector["title"] = { line: line, point: point, text: text };
       }
       self.chart["scores"].push(vector);
