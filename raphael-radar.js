@@ -160,7 +160,7 @@
 
       // title with line sample
       if (title && global_draw_options['text']['key']) {
-        var x1 = cx - 50, y1 = bottom + 30 + 20 * i;
+        var x1 = cx - 50, y1 = bottom + 40 + 20 * i;
         var x2 = cx, y2 = y1;
         var line = this.path("M " + x1 + " " + y1 + " L " + x2 + " " + y2).attr(draw_options['lines']);
         var point = this.circle(x1, y1, draw_options['points']['size']).attr(draw_options['points']);
