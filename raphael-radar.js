@@ -72,8 +72,8 @@
     var sides = labels.length;
     
     var global_draw_defaults = {
-      text: { fill: '#222', 'max-chars': 10, 'key': true },
-    }
+      text: { fill: '#222', 'max-chars': 10, 'key': true }
+    };
     var global_draw_options = $.extend( true, global_draw_defaults, user_draw_options);
 
     // Genarates points of the chart frame
