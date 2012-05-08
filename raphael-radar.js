@@ -138,7 +138,7 @@
         }
 
         if (i === 0) {
-          text = self.raphael.text(x1 - 10, y1, self.min_score + j * scale).attr($.extend(true, self.global_draw_options["text"], { "text-anchor": "end" }));
+          text = self.raphael.text(x1 - 7, y2, self.min_score + j * scale).attr($.extend(true, self.global_draw_options["text"], { "text-anchor": "end" }));
           ruler_text.push(text);
         }
       }
@@ -182,11 +182,11 @@
       // keys on the object
       if (score_groups[i].scores) {
         for (j = 0; j < score_groups[i].scores.length; ++j)
-          scores.push(score_groups[i].scores[j] / self.max_score);
+          scores.push((score_groups[i].scores[j] - self.min_score) / (self.max_score - self.min_score));
       } else {
         for (j = 0; j < labels.length; ++j) {
           value = score_groups[i][labels[j]] || score_groups[i][labels[j].toLowerCase().replace(" ", "_")];
-          scores.push(value / self.max_score);
+          scores.push((value - self.min_score) / (self.max_score - self.min_score));
         }
       }
 

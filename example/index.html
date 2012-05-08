@@ -39,7 +39,7 @@
       </div>
     </div>
     
-    <h2>4. Rich done by passing in options</h2>
+    <h2>4. Rich done by passing in options and set minimun score</h2>
       <div class="example">
         <div class="graph" id="rich_graph_options">
 
@@ -60,7 +60,7 @@
       var max_point = 10;
 
       var paper1 = Raphael( "simple_graph", 460, 360);
-      var simple = paper1.radarchart( 221, 160, 120, labels, 10, score_groups);
+      var simple = paper1.radarchart( 221, 160, 120, labels, 0, 10, score_groups);
 
       var descriptive_groups = [
           {title: "Real Madrid C.F.", 
@@ -80,12 +80,12 @@
           ];
 
       var paper2 = Raphael( "simple_graph_auto_populated", 460, 360);
-      var simple_auto_populate = paper2.radarchart( 221, 160, 120, labels, 10, descriptive_groups);
+      var simple_auto_populate = paper2.radarchart( 221, 160, 120, labels, 0, 10, descriptive_groups);
 
 
       // hmm... maybe it is much better you can pass the attribute to radarchart function.
       var paper3 = Raphael( "rich_graph", 460, 360);
-      var rich = paper3.radarchart( 221, 160, 120, labels, 10, score_groups);
+      var rich = paper3.radarchart( 221, 160, 120, labels, 0, 10, score_groups);
       rich.scores[0].line.attr({'stroke-width':'2', 'stroke':'#39b549','stroke-dasharray':'- '});
       for (var i=0; i<rich.scores[0].points.length; i++) {
         rich.scores[0].points[i].attr({'fill':'#39b549','stroke-width':'0'});
@@ -103,24 +103,24 @@
       // Rich graph using options
       var descriptive_groups_with_draw_options = [
           { title: "Real Madrid C.F.", 
-            offense: 8,
-            defense: 9,
-            technique: 7,
-            strategy: 9,
-            physicality: 7,
-            mentality: 6,
+            offense: 80,
+            defense: 90,
+            technique: 70,
+            strategy: 90,
+            physicality: 70,
+            mentality: 60,
             draw_options: {
               lines: {'stroke-width':'2', 'stroke':'#39b549','stroke-dasharray':'- '},
               points: {'fill':'#39b549','stroke-width':'0'}
             }
           },
           { title: "FC Barcelona", 
-            offense: 10,
-            defense: 7,
-            technique: 10,
-            strategy: 7,
-            physicality: 6,
-            mentality: 8,
+            offense: 100,
+            defense: 70,
+            technique: 100,
+            strategy: 70,
+            physicality: 60,
+            mentality: 80,
             draw_options: {
               lines: {'stroke-width':'4','stroke':'#0070bb','stroke-opacity':0.7,'fill':'#f7d2a8','fill-opacity':0.6},
               points: {'fill':'#f05a23','stroke-width':'1.5','stroke':'#333', 'size': 6}
@@ -129,8 +129,7 @@
       ];
 
       var paper4 = Raphael( "rich_graph_options", 460, 360);
-      var rich_graph_options = paper4.radarchart( 221, 160, 120, labels, 10, descriptive_groups_with_draw_options);
-
+      var rich_graph_options = paper4.radarchart( 221, 160, 120, labels, 50, 100, descriptive_groups_with_draw_options);
 
     });
   </script>
