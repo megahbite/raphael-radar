@@ -1,0 +1,170 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+  <head>
+    <meta charset="utf-8"> 
+    <title>Raphaël Radar Chart Plugin Sample</title> 
+    <link rel="stylesheet" href="example.css">
+    <script src="https://raw.github.com/hakobera/raphael-radar/master/example/raphael-2.1.0.min.js"></script>
+    <script src="https://raw.github.com/hakobera/raphael-radar/master/example/jquery-1.7.2.min.js"></script>
+    <script src="https://raw.github.com/hakobera/raphael-radar/master/example/popup.js"></script>
+    <script src="https://raw.github.com/hakobera/raphael-radar/master/raphael-radar.js"></script>
+  </head>
+  <body>
+    <h1>Examples</h1>
+    <a href="https://github.com/hakobera/raphael-radar">github</a>
+
+    <h2>1. Simple</h2>
+    <div class="example">
+      <div class="graph" id="simple_graph">
+
+      </div>
+      <div class="code">
+
+      </div>
+    </div>
+
+    <h2>2. Simple with auto-populated scores from labels</h2>
+    <div class="example">
+      <div class="graph" id="simple_graph_auto_populated">
+
+      </div>
+      <div class="code">
+
+      </div>
+    </div>
+    
+    <h2>3. Rich manipulated manually</h2>
+    <div class="example">
+      <div class="graph" id="rich_graph">
+
+      </div>
+    </div>
+    
+    <h2>4. Rich done by passing in options and set minimun score</h2>
+    <div class="example">
+      <div class="graph" id="rich_graph_options">
+
+      </div>
+    </div>
+      
+    <h2>5. Event</h2>
+    <div class="example">
+      <div class="graph" id="graph_with_event">
+
+      </div>
+    </div>
+  </body>
+
+  <script>
+    $(document).ready(function(){
+      var score_groups = [
+          {title: "Real Madrid C.F.", scores: [ 8, 9, 7, 9, 7, 6]},
+          {title: "FC Barcelona", scores: [ 10, 7, 10, 7, 6, 8]}
+          ];
+      var labels =  ["Offense", "Defense", "Technique", "Strategy", "Physicality", "Mentality"];
+      var max_point = 10;
+
+      var paper1 = Raphael( "simple_graph", 460, 360);
+      var simple = paper1.radarchart( 221, 160, 120, labels, 0, 10, score_groups);
+
+      var descriptive_groups = [
+          {title: "Real Madrid C.F.", 
+            offense: 8,
+            defense: 9,
+            technique: 7,
+            strategy: 9,
+            physicality: 7,
+            mentality: 6},
+          {title: "FC Barcelona", 
+            offense: 10,
+            defense: 7,
+            technique: 10,
+            strategy: 7,
+            physicality: 6,
+            mentality: 8}
+          ];
+
+      var paper2 = Raphael( "simple_graph_auto_populated", 460, 360);
+      var simple_auto_populate = paper2.radarchart( 221, 160, 120, labels, 0, 10, descriptive_groups);
+
+
+      // hmm... maybe it is much better you can pass the attribute to radarchart function.
+      var paper3 = Raphael( "rich_graph", 460, 360);
+      var rich = paper3.radarchart( 221, 160, 120, labels, 0, 10, score_groups);
+      rich.scores[0].line.attr({'stroke-width':'2', 'stroke':'#39b549','stroke-dasharray':'- '});
+      for (var i=0; i<rich.scores[0].points.length; i++) {
+        rich.scores[0].points[i].attr({'fill':'#39b549','stroke-width':'0'});
+      }
+      rich.scores[0].title.line.attr({'stroke-width':'2', 'stroke':'#39b549','stroke-dasharray':'- '});
+      rich.scores[0].title.point.attr({'fill':'#39b549','stroke-width':'0'});
+
+      rich.scores[1].line.attr({'stroke-width':'4','stroke':'#0070bb','stroke-opacity':0.7,'fill':'#f7d2a8','fill-opacity':0.6})
+      for (var i=0; i<rich.scores[1].points.length; i++) {
+        rich.scores[1].points[i].attr({'fill':'#f05a23','stroke-width':'1.5','stroke':'#333'}).scale(1.2,1.2);
+      }
+      rich.scores[1].title.line.attr({'stroke-width':'4','stroke':'#0070bb','stroke-opacity':0.7});
+      rich.scores[1].title.point.attr({'fill':'#f05a23','stroke-width':'1.5','stroke':'#333'});
+
+      // Rich graph using options
+      var descriptive_groups_with_draw_options = [
+          { title: "Real Madrid C.F.", 
+            offense: 80,
+            defense: 90,
+            technique: 70,
+            strategy: 90,
+            physicality: 70,
+            mentality: 60,
+            draw_options: {
+              lines: {'stroke-width':'2', 'stroke':'#39b549','stroke-dasharray':'- '},
+              points: {'fill':'#39b549','stroke-width':'0'}
+            }
+          },
+          { title: "FC Barcelona", 
+            offense: 100,
+            defense: 70,
+            technique: 100,
+            strategy: 70,
+            physicality: 60,
+            mentality: 80,
+            draw_options: {
+              lines: {'stroke-width':'4','stroke':'#0070bb','stroke-opacity':0.7,'fill':'#f7d2a8','fill-opacity':0.6},
+              points: {'fill':'#f05a23','stroke-width':'1.5','stroke':'#333', 'size': 6}
+            }
+          }
+      ];
+
+      var paper4 = Raphael( "rich_graph_options", 460, 360);
+      var rich_graph_options = paper4.radarchart( 221, 160, 120, labels, 50, 100, descriptive_groups_with_draw_options);
+
+      var paper5 = Raphael( "graph_with_event", 460, 360);
+      var graph_with_event = paper5.radarchart( 221, 160, 120, labels, 50, 100, descriptive_groups_with_draw_options);
+
+      graph_with_event.scores.forEach(function(s) {
+        s.points.forEach(function (p) {
+          console.log(p.score);
+
+          var side = "right";
+          var offset = p.attrs.r;
+          var popupLabel = paper5.text(p.attrs.cx, p.attrs.cy, p.title + '\n' + p.score.label + ': ' + p.score.rawValue).hide();
+          if (p.attrs.cx + popupLabel.getBBox().width > paper5.width) {
+            side = "left";
+            offset = -offset;
+          }
+          var popup = paper5.popup(p.attrs.cx + offset, p.attrs.cy, popupLabel, side).attr({fill: "#fff", stroke: "#666", "stroke-width": 2 }).hide();
+
+          p.mouseover(function () {
+            popup.toFront().show();
+            popupLabel.toFront().show();
+          });
+
+          p.mouseout(function () {
+            popup.hide();
+            popupLabel.hide();
+          });
+
+          p.toFront();
+        });
+      });
+    });
+  </script>
+</html>
