@@ -14,8 +14,8 @@
   function path_string(center, points, scores) {
     var vertex = [];
     for (var i = 0; i < points.length; i++) {
-      var x = lined_on(center.x, points[i].x, scores[i]);
-      var y = lined_on(center.y, points[i].y, scores[i]);
+      var x = lined_on(center.x, points[i].x, scores[i].value);
+      var y = lined_on(center.y, points[i].y, scores[i].value);
       vertex.push("" + x + " " + y);
     }
     return "M " + vertex.join("L ") + "L " + vertex[0];
@@ -181,12 +181,21 @@
       // loop through the labels attribute to try querying the
       // keys on the object
       if (score_groups[i].scores) {
-        for (j = 0; j < score_groups[i].scores.length; ++j)
-          scores.push((score_groups[i].scores[j] - self.min_score) / (self.max_score - self.min_score));
+        for (j = 0; j < score_groups[i].scores.length; ++j) {
+          scores.push({
+            value: (score_groups[i].scores[j] - self.min_score) / (self.max_score - self.min_score),
+            rawValue: score_groups[i].scores[j],
+            label: self.labels[j]
+          });
+        }
       } else {
         for (j = 0; j < labels.length; ++j) {
           value = score_groups[i][labels[j]] || score_groups[i][labels[j].toLowerCase().replace(" ", "_")];
-          scores.push((value - self.min_score) / (self.max_score - self.min_score));
+          scores.push({
+            value: (value - self.min_score) / (self.max_score - self.min_score),
+            rawValue: value,
+            label: labels[j]
+          });
         }
       }
 
@@ -196,10 +205,12 @@
 
       // Draws points for chart
       for (j = 0; j < scores.length; j++) {
-        x = lined_on(self.cx, points[j].x, scores[j]);
-        y = lined_on(self.cy, points[j].y, scores[j]);
+        x = lined_on(self.cx, points[j].x, scores[j].value);
+        y = lined_on(self.cy, points[j].y, scores[j].value);
 
         point = self.raphael.circle(x, y, draw_options["points"]["size"]).attr(draw_options["points"]);
+        point.score = scores[j];
+        point.title = title;
         v_points.push(point);
       }
       vector["points"] = v_points;

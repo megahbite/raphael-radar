@@ -1,19 +1,19 @@
-ono/raphael-radar
-=================
+raphael-radar
+=============
 
-ono/raphael-radar is a refactored version of
-[Raphael-Radar](https://github.com/tnzk/Raphael-Radar)
+hakobera/raphael-radar is a refactored version of
+[Raphael-Radar](https://github.com/jsoma/raphael-radar)
 
 ![Screen Shot](https://github.com/ono/raphael-radar/raw/master/example/images/screenshot.png)
 
 The objectives of refactoring are...
 
-* Work with the latest version of Raphaël.
-* Easy customization. Especially for cosmetic changes.
+* Work with the latest version of Raphaël 2.1.0 and jQuery 1.7.2.
 * Fix some bugs.
-* Support multiple groups of scores.
 * Remove unnessesary code from the library and put the idea into example.
 * Make the code simpler.
+* Add ruler label
+* Add event example.
 
 Please note that there is no compatibility with the original version.
 
@@ -26,7 +26,7 @@ Style options are maintained through the draw_options object. See `default_draw_
 
 The following chart can be created using the code below it, and you no longer need to edit the lines and points manually.
 
-![Screen Shot](https://github.com/ono/raphael-radar/raw/master/example/images/screenshot.png)
+![Screen Shot](https://github.com/hakobera/raphael-radar/raw/master/example/images/screenshot.png)
     
     var objects = [
         { title: "Real Madrid C.F.", 
@@ -59,24 +59,5 @@ The following chart can be created using the code below it, and you no longer ne
 
     var paper = Raphael( "id_of_some_div", 460, 360);
     paper.radarchart( 221, 160, 120, labels, 10, objects);
-    
-**Note: While the example below works great, I (jsoma) would recommend using the code above or looking at the most recently updated on under /examples in this project**
 
-Seeing example is always the best way to understand how it works. Here is an
-[example code](http://o1123.com/raphael-radar/example/index.html).
-
-I am thinking of making the page nicer and adding an example to handling events
-on the chart near future.
-
-TODO
-----
-
-* Better example page with code view.
-* License information.
-
-Special Thanks to
------------------
-
-* KURAZEKO Kyohe for original version.
-* Yoshihide Tsuda for designing a rich version of sample chart.
-
+Seeing example is always the best way to understand how it works.

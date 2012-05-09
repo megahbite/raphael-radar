@@ -6,7 +6,8 @@
     <link rel="stylesheet" href="example.css"> 
     <script src="raphael-2.1.0.min.js"></script>
     <script src="jquery-1.7.2.min.js"></script>
-    <script src="../raphael-radar.js"></script> 
+    <script src="popup.js"></script>
+    <script src="../raphael-radar.js"></script>
   </head>
   <body>
     <h1>Examples</h1>
@@ -40,14 +41,18 @@
     </div>
     
     <h2>4. Rich done by passing in options and set minimun score</h2>
-      <div class="example">
-        <div class="graph" id="rich_graph_options">
+    <div class="example">
+      <div class="graph" id="rich_graph_options">
 
-        </div>
       </div>
+    </div>
       
-    <h2>4. Event</h2>
-    ...coming soon
+    <h2>5. Event</h2>
+    <div class="example">
+      <div class="graph" id="graph_with_event">
+
+      </div>
+    </div>
   </body>
 
   <script>
@@ -131,6 +136,35 @@
       var paper4 = Raphael( "rich_graph_options", 460, 360);
       var rich_graph_options = paper4.radarchart( 221, 160, 120, labels, 50, 100, descriptive_groups_with_draw_options);
 
+      var paper5 = Raphael( "graph_with_event", 460, 360);
+      var graph_with_event = paper5.radarchart( 221, 160, 120, labels, 50, 100, descriptive_groups_with_draw_options);
+
+      graph_with_event.scores.forEach(function(s) {
+        s.points.forEach(function (p) {
+          console.log(p.score);
+
+          var side = "right";
+          var offset = p.attrs.r;
+          var popupLabel = paper5.text(p.attrs.cx, p.attrs.cy, p.title + '\n' + p.score.label + ': ' + p.score.rawValue).hide();
+          if (p.attrs.cx + popupLabel.getBBox().width > paper5.width) {
+            side = "left";
+            offset = -offset;
+          }
+          var popup = paper5.popup(p.attrs.cx + offset, p.attrs.cy, popupLabel, side).attr({fill: "#fff", stroke: "#666", "stroke-width": 2 }).hide();
+
+          p.mouseover(function () {
+            popup.toFront().show();
+            popupLabel.toFront().show();
+          });
+
+          p.mouseout(function () {
+            popup.hide();
+            popupLabel.hide();
+          });
+
+          p.toFront();
+        });
+      });
     });
   </script>
 </html>
