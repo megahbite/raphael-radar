@@ -20,6 +20,8 @@ Please note that there is no compatibility with the original version.
 Example
 -------
 
+[Live Demo](http://hakobera.github.com/raphael-radar/example/example.html)
+
 Raphael-Radar now has the option to maintain all content & style options through the objects passed to radarchart, instead of using a separate 'scores' array or manually manipulating the Raphaël chart.
 
 Style options are maintained through the draw_options object. See `default_draw_options` in raphael-radar.js for defaults. All attributes are passed directly to Raphaël via `attr()` so you can set pretty much whatever attributes you'd like on lines, points and text.
